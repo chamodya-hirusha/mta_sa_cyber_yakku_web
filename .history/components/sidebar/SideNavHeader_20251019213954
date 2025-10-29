@@ -1,0 +1,36 @@
+"use client";
+
+import Link from "next/link";
+import { motion } from "framer-motion";
+
+export default function SideNavHeader() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="flex items-center justify-between px-5 py-4 border-b border-purple-500/20 bg-slate-900/60 backdrop-blur-md"
+    >
+      {/* Logo */}
+      <Link href="/" className="flex items-center gap-2">
+        <span className="text-2xl">💫</span>
+        <span className="text-lg font-semibold text-purple-300 tracking-wide">
+          YourStore
+        </span>
+      </Link>
+
+      {/* Close Icon (mobile friendly) */}
+      <button
+        className="text-purple-400 hover:text-purple-200 transition-colors duration-300 focus:outline-none"
+        onClick={() => {
+          if (typeof window !== "undefined") {
+            const event = new CustomEvent("close-sidenav");
+            window.dispatchEvent(event);
+          }
+        }}
+      >
+        ✖
+      </button>
+    </motion.div>
+  );
+}
