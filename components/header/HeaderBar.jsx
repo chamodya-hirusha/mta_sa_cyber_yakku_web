@@ -15,7 +15,6 @@ export default function HeaderBar({
   isLoggedIn,
   onLogout
 }) {
-  const [profileOpen, setProfileOpen] = useState(false);
   const router = useRouter();
 
   return (
@@ -31,8 +30,6 @@ export default function HeaderBar({
           setActiveTab={setActiveTab}
           isLoggedIn={isLoggedIn}
           onLogout={onLogout}
-          profileOpen={profileOpen}
-          setProfileOpen={setProfileOpen}
           router={router}
         />
 

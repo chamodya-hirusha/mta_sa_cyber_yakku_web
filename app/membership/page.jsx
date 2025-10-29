@@ -29,7 +29,7 @@ export default function CyberYakkuPricing() {
   const total = cart.reduce((sum, item) => sum + item.price, 0).toFixed(2);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-gray-100 flex flex-col relative overflow-hidden">
+    <div className="min-h-screen flex flex-col relative overflow-hidden" style={{ backgroundColor: 'rgb(var(--bg-color))', color: 'rgb(var(--text-color))' }}>
       {/* Header - fixed on top */}
       <HeaderBar
         cartCount={cart.length}

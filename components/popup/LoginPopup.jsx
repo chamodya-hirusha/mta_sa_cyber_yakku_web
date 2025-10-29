@@ -12,6 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { handleClientError, validateUsername, validatePassword, safeLocalStorage } from "@/lib/utils";
+import { showLoginSuccess, showPasswordSetupWarning, showLoginError } from "@/components/toasts/loginToasts";
 
 export default function LoginPopup({ isOpen, onClose, onLogin }) {
   const [username, setUsername] = useState("");
@@ -62,53 +63,52 @@ export default function LoginPopup({ isOpen, onClose, onLogin }) {
       const data = await res.json();
 
       if (data.success) {
-        // Store token and user data using safe localStorage operations
-        if (data.user) {
-          safeLocalStorage.setItem('user', data.user);
+        // ✅ Password check
+        if (data.requiresPasswordSetup) {
+          showPasswordSetupWarning();
+          // Do not proceed with login
+          return;
+        } else {
+          showLoginSuccess();
         }
-        if (data.token) {
-          safeLocalStorage.setItem('token', data.token);
-        }
+
+        // Save token and user
+        if (data.user) safeLocalStorage.setItem("user", data.user);
+        if (data.token) safeLocalStorage.setItem("token", data.token);
 
         onLogin(data.user);
         setUsername("");
         setPassword("");
         onClose();
       } else {
-        setError(data.error || "Invalid credentials");
+        const errorMsg = data.error || "Invalid credentials";
+        setError(errorMsg);
+        showLoginError(errorMsg);
       }
     } catch (error) {
-      const errorMessage = handleClientError(error, 'Login');
+      const errorMessage = handleClientError(error, "Login");
       setError(errorMessage);
+      showLoginError(errorMessage);
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-<Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent
-        className="
-          sm:max-w-md rounded-2xl p-8 shadow-2xl border transition-all duration-300 
-          bg-[rgb(var(--bg-color)/1)]
-          border-[rgb(var(--border-color)/0.3)]
-          shadow-[0_0_25px_rgb(var(--shadow-color)/0.15)]
-        "
-        aria-describedby="login-dialog-description"
-      >
+    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
+      <DialogContent className="sm:max-w-md bg-slate-900 border border-purple-500/30 rounded-2xl p-8 shadow-2xl shadow-purple-500/10" aria-describedby="login-dialog-description">
         <DialogHeader>
-          <DialogTitle className="text-[rgb(var(--text-color)/1)] text-2xl font-bold">
+          <DialogTitle className="text-white text-2xl font-bold">
             Member Login
           </DialogTitle>
-          <DialogDescription id="login-dialog-description" className="text-[rgb(var(--text-color)/0.7)]">
+          <DialogDescription id="login-dialog-description">
             Enter your credentials to continue.
           </DialogDescription>
           <DialogClose asChild>
             <Button
               variant="ghost"
-              className="absolute top-3 right-3 text-[rgb(var(--accent-color)/0.8)] hover:text-[rgb(var(--text-color)/1)] transition"
+              className="absolute top-3 right-3 text-purple-400 hover:text-white transition-colors"
             >
-              ✕
             </Button>
           </DialogClose>
         </DialogHeader>
@@ -118,48 +118,25 @@ export default function LoginPopup({ isOpen, onClose, onLogin }) {
             placeholder="Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className="
-              bg-[rgb(var(--bg-color)/0.5)] 
-              border border-[rgb(var(--border-color)/0.2)] 
-              text-[rgb(var(--text-color)/1)] 
-              placeholder-[rgb(var(--accent-color)/0.4)] 
-              focus:ring-2 focus:ring-[rgb(var(--accent-color)/0.8)] 
-              focus:border-[rgb(var(--accent-color)/0.8)]
-            "
+            className="bg-slate-800/50 border border-purple-500/20 text-white placeholder-purple-400/50 focus:ring-2 focus:ring-red-500 focus:border-red-500"
           />
           <Input
             type="password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="
-              bg-[rgb(var(--bg-color)/0.5)] 
-              border border-[rgb(var(--border-color)/0.2)] 
-              text-[rgb(var(--text-color)/1)] 
-              placeholder-[rgb(var(--accent-color)/0.4)] 
-              focus:ring-2 focus:ring-[rgb(var(--accent-color)/0.8)] 
-              focus:border-[rgb(var(--accent-color)/0.8)]
-            "
+            className="bg-slate-800/50 border border-purple-500/20 text-white placeholder-purple-400/50 focus:ring-2 focus:ring-red-500 focus:border-red-500"
           />
           {error && <p className="text-red-500 text-sm">{error}</p>}
           <Button
             type="submit"
             disabled={isLoading}
-            className="
-              w-full py-3 
-              bg-[rgb(var(--accent-color)/1)]
-              hover:bg-[rgb(var(--accent-color)/0.8)]
-              text-[rgb(var(--text-color)/1)]
-              font-bold rounded-lg 
-              transition-all shadow-lg 
-              hover:shadow-[0_0_15px_rgb(var(--shadow-color)/0.4)]
-            "
+            className="w-full py-3 bg-gradient-to-r from-purple-600 to-red-600 hover:from-purple-700 hover:to-red-700 text-white font-bold rounded-lg transition-all shadow-lg hover:shadow-red-500/30"
           >
-            {isLoading ? "Signing In..." : "Sign In"}
+            {isLoading ? 'Signing In...' : 'Sign In'}
           </Button>
         </form>
       </DialogContent>
     </Dialog>
-
   );
 }

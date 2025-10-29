@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 import loginRouter from './api/login.js';
 
 // Load environment variables
-dotenv.config({ path: '.env.local' });
+dotenv.config({ path: '.env' });
 
 const app = express();
 let PORT = process.env.PORT || 4000;

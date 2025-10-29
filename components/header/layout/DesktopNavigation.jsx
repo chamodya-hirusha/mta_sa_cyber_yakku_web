@@ -2,6 +2,7 @@ import Nav from "../navigation/HeaderNav";
 import SearchBar from "../../common/SearchBar";
 import CartButton from "../actions/CartButton";
 import ProfileButton from "../actions/ProfileButton";
+import MenuButton from "../actions/MenuButton";
 
 export default function DesktopNavigation({
   cartCount,
@@ -11,8 +12,6 @@ export default function DesktopNavigation({
   setActiveTab,
   isLoggedIn,
   onLogout,
-  profileOpen,
-  setProfileOpen,
   router
 }) {
   return (
@@ -27,14 +26,14 @@ export default function DesktopNavigation({
 
       {/* Right Side Icons */}
       <div className="flex items-center gap-4">
+  
         <CartButton cartCount={cartCount} onCartClick={onCartClick} />
         <ProfileButton
           isLoggedIn={isLoggedIn}
           onLogout={onLogout}
           router={router}
-          profileOpen={profileOpen}
-          setProfileOpen={setProfileOpen}
         />
+         <MenuButton router={router} />
       </div>
     </div>
   );

@@ -8,7 +8,7 @@ export default function SearchBar({
   value = "",
   onChange,
   placeholder = "Search categories...",
-  width = "350px",
+  width = "200px",
   className,
   ...props
 }) {
@@ -21,7 +21,7 @@ export default function SearchBar({
     <div
       className={cn(
         "flex items-center gap-2 rounded-xl px-4 py-2 shadow-inner transition-all duration-300 focus-within:shadow-[0_0_12px_rgba(168,85,247,0.5)]",
-        "bg-muted/70 text-muted-foreground",
+        "bg-muted/50 text-muted-foreground",
         "bg-[#1a0b2e]/80",
         "shadow-purple-700/30",
         rootStyle,

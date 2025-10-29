@@ -2,7 +2,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { Heart, ShoppingCart, Settings, LogOut, Shirt, TrendingUp, Star, Palette } from 'lucide-react';
 import { safeLocalStorage } from '@/lib/utils';
-import ThemeDropdown from '../header/actions/themesdropdownbtn';
 
 export default function AdditionalMenu({ isLoggedIn, setIsLoggedIn, setLoginPopupOpen, setUser }) {
   // Handles frontend + backend logout logic
@@ -39,7 +38,7 @@ export default function AdditionalMenu({ isLoggedIn, setIsLoggedIn, setLoginPopu
             </button>
             <div className="flex items-center gap-3 px-4 py-3 rounded-lg text-purple-300 hover:bg-purple-900/40 transition-colors w-full text-left">
               <Palette className="w-5 h-5" />
-              <ThemeDropdown />
+        
             </div>
             <button
               onClick={handleLogout}

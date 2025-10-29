@@ -9,7 +9,7 @@ import CollapsibleMenu from "../navigation/CollapsibleMenu";
 import AdditionalMenu from "../navigation/AdditionalMenu";
 import LoginPopup from "../popup/LoginPopup";
 import { sideNavLinks, menuLinks } from "../../lib/navigationData";
-import ThemeDropdown from "../header/actions/themesdropdownbtn";
+
 
 export default function SideNav({
   isLoggedIn,
@@ -54,9 +54,6 @@ export default function SideNav({
           items={menuLinks}
           setShowSidenav={setShowSidenav}
         />
-        <div className="mt-5 px-8">
-          <ThemeDropdown isLoggedIn={isLoggedIn} />
-        </div>
 
         <AdditionalMenu
           isLoggedIn={isLoggedIn}
