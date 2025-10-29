@@ -134,7 +134,6 @@
     scroll-behavior: smooth;
   }
   body {
-    @apply bg-background text-foreground;
     min-width: 0;
     min-height: 100vh;
     width: 100vw;
@@ -142,5 +141,196 @@
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Theme Variables */
+/* === Theme Base === */
+:root {
+  --bg-color: 15 23 42; /* slate-900 */
+  --text-color: 255 255 255;
+  --accent-color: 168 85 247; /* purple-500 */
+  --border-color: 139 92 246; /* purple-400 */
+  --shadow-color: 168 85 247;
+  --card-bg: 30 41 59; /* slate-800 */
+  --hover-bg: 51 65 85; /* slate-700 */
+}
+
+/* === Light Theme === */
+.light-theme {
+  --bg-color: 248 250 252; /* slate-50 */
+  --text-color: 0 0 0; /* black */
+  --accent-color: 236 72 153; /* pink-500 */
+  --border-color: 219 39 119; /* pink-600 */
+  --shadow-color: 236 72 153;
+  --card-bg: 255 255 255; /* white */
+  --hover-bg: 241 245 249; /* slate-100 */
+}
+
+/* === Dark Theme === */
+.dark-theme {
+  --bg-color: 15 23 42; /* slate-900 */
+  --text-color: 255 255 255;
+  --accent-color: 139 92 246; /* purple-400 */
+  --border-color: 168 85 247; /* purple-500 */
+  --shadow-color: 168 85 247;
+  --card-bg: 30 41 59; /* slate-800 */
+  --hover-bg: 51 65 85; /* slate-700 */
+}
+
+/* === Default Theme === */
+.theme-default {
+  --bg-color: 24 24 27; /* zinc-900 */
+  --text-color: 255 255 255;
+  --accent-color: 239 68 68; /* red-500 */
+  --border-color: 220 38 38; /* red-600 */
+  --shadow-color: 239 68 68;
+  --card-bg: 39 39 42; /* zinc-800 */
+  --hover-bg: 63 63 70; /* zinc-700 */
+}
+
+/* Apply theme colors to body */
+body {
+  background-color: rgb(var(--bg-color)) !important;
+  color: rgb(var(--text-color)) !important;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Theme-aware components */
+.theme-card {
+  background-color: rgb(var(--card-bg));
+  border: 1px solid rgb(var(--border-color) / 0.3);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.theme-hover:hover {
+  background-color: rgb(var(--hover-bg));
+  transition: background-color 0.2s ease;
+}
+
+.theme-accent {
+  color: rgb(var(--accent-color));
+}
+
+.theme-border {
+  border-color: rgb(var(--border-color) / 0.3);
+}
+
+@layer utilities {
+  /* Custom responsive utilities */
+  
+  /* Touch-friendly interactions */
+  .touch-manipulation {
+    touch-action: manipulation;
+  }
+  
+  /* Better mobile tap targets */
+  .tap-highlight-none {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Alternative tap highlight removal using Tailwind's arbitrary values */
+  .no-tap-highlight {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Responsive text truncation */
+  .line-clamp-1 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
+  
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+  
+  .line-clamp-3 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+  
+  /* Mobile-first responsive spacing */
+  .mobile-padding {
+    @apply px-3 sm:px-4 md:px-6 lg:px-8 xl:px-10;
+  }
+  
+  .mobile-margin {
+    @apply mx-3 sm:mx-4 md:mx-6 lg:mx-8 xl:mx-10;
+  }
+  
+  /* Responsive grid utilities */
+  .responsive-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5;
+  }
+  
+  .responsive-grid-2 {
+    @apply grid grid-cols-1 lg:grid-cols-2;
+  }
+  
+  /* Mobile-optimized carousel */
+  .mobile-carousel {
+    @apply flex gap-3 sm:gap-4 overflow-x-auto pb-3 sm:pb-4 snap-x snap-mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .mobile-carousel::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .mobile-carousel-item {
+    @apply flex-shrink-0 snap-start;
+  }
+  
+  /* Enhanced mobile responsiveness */
+ .mobile-container {
+  @apply w-full mx-auto px-2 md:pt-20 sm:px-4 md:px-4 lg:px-10 xl:px-10   ;
+}
+
+  
+  /* Better mobile images */
+  .mobile-image {
+    @apply w-full h-auto object-cover;
+  }
+  
+  /* Mobile-friendly buttons */
+  .mobile-button {
+    @apply min-h-[44px] min-w-[44px] touch-manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Responsive text sizing */
+  .mobile-text-xs {
+    @apply text-xs sm:text-sm;
+  }
+  
+  .mobile-text-sm {
+    @apply text-sm sm:text-base;
+  }
+  
+  .mobile-text-base {
+    @apply text-base sm:text-lg;
+  }
+  
+  .mobile-text-lg {
+    @apply text-lg sm:text-xl;
+  }
+  
+  .mobile-text-xl {
+    @apply text-xl sm:text-2xl;
+  }
+  
+  .mobile-text-2xl {
+    @apply text-2xl sm:text-3xl;
+  }
+  
+  .mobile-text-3xl {
+    @apply text-3xl sm:text-4xl;
   }
 }

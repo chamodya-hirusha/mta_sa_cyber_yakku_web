@@ -5,21 +5,36 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       screens: {
+
         'sm': '640px',
         'md': '768px',
         'lg': '1024px',
         'xl': '1200px',
         '2xl': '1536px',
+        'mobile': '480px',
         'tablet': '900px',
         'desktop': '1200px',
       },
       container: {
         center: true, // centers the container
-        padding: '10px', // optional padding inside container
+        padding: '5px',
+        maxWidth: {
+          DEFAULT: '100%',
+          xs: '480px',
+          sm: '640px',
+          md: '768px',
+          lg: '1024px',
+          xl: '1200px',
+          '2xl': '1536px',
+        },
+      },
+      extend: {
         screens: {
+          xs: '480px',
           sm: '640px',
           md: '768px',
           lg: '1024px',
@@ -31,4 +46,4 @@ module.exports = {
   },
   plugins: [],
 }
-  
+

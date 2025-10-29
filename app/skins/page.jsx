@@ -1,10 +1,13 @@
 "use client";
 import React, { useState } from 'react';
-import SideNav from '../../components/SideNav';
-import HeaderBar from '../../components/HeaderBar';
-import ProductCard from '../../components/ProductCard';
-import CartSidebar from '../../components/CartSidebar';
-import MobileNavigationMenu from '../../components/MobileNavigationMenu';
+import SideNav from '../../components/sidebar/SideNav';
+import HeaderBar from '../../components/header/HeaderBar';
+import ProductCard from '../../components/product/ProductCard';
+import CartSidebar from '../../components/sidebar/CartSidebar';
+import MobileNavigationMenu from '../../components/navigation/MobileNavigationMenu';
+import { skinsProducts } from './data/skinsData';
+
+
 
 export default function SkinsPage() {
   const [cart, setCart] = useState([]);
@@ -12,17 +15,6 @@ export default function SkinsPage() {
   const [sidenavOpen, setShowSidenav] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [activeTab, setActiveTab] = useState('all');
-
-  const skinsProducts = [
-    { id: 1, name: 'Cyber Agent', category: 'skins', price: 4.99, image: '👨‍💼', rating: 4.8, sales: 234, featured: true, discount: 0 },
-    { id: 2, name: 'Neon Punk', category: 'skins', price: 4.99, image: '👁️', rating: 4.6, sales: 189, discount: 0 },
-    { id: 3, name: 'Street Legend', category: 'skins', price: 4.99, image: '👕', rating: 4.7, sales: 156, featured: true, discount: 15 },
-    { id: 4, name: 'Corporate Elite', category: 'skins', price: 6.99, image: '🎩', rating: 4.9, sales: 312, featured: true, discount: 0 },
-    { id: 5, name: 'Cyber Warrior', category: 'skins', price: 5.99, image: '🛡️', rating: 4.5, sales: 198, discount: 10 },
-    { id: 6, name: 'Neon Ninja', category: 'skins', price: 7.99, image: '🥷', rating: 4.7, sales: 267, discount: 0 },
-    { id: 7, name: 'Street Racer', category: 'skins', price: 6.49, image: '🏁', rating: 4.6, sales: 145, discount: 20 },
-    { id: 8, name: 'Cyber Samurai', category: 'skins', price: 8.99, image: '⚔️', rating: 4.8, sales: 289, featured: true, discount: 0 },
-  ];
 
   const headerTabs = [
     { id: 'all', label: 'All Skins', icon: '👕' },
@@ -42,7 +34,7 @@ export default function SkinsPage() {
   const total = cart.reduce((sum, item) => sum + item.price, 0).toFixed(2);
 
   return (
-    <div className="min-h-screen pt-30 bg-slate-950 flex">
+    <div className="min-h-screen pt-15 flex" style={{ backgroundColor: 'rgb(var(--bg-color))', color: 'rgb(var(--text-color))' }}>
       {/* Side Navigation */}
       <SideNav
         isLoggedIn={isLoggedIn}
@@ -97,13 +89,7 @@ export default function SkinsPage() {
         total={total}
       />
 
-      {/* Overlay for mobile sidenav */}
-      {sidenavOpen && (
-        <div
-          className="fixed inset-0 bg-black/40 z-30 lg:hidden"
-          onClick={() => setShowSidenav(false)}
-        ></div>
-      )}
+
     </div>
   );
 }
