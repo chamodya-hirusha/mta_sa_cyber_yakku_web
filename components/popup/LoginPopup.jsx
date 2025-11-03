@@ -48,6 +48,7 @@ export default function LoginPopup({ isOpen, onClose, onLogin }) {
       const res = await fetch(`${apiUrl}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: 'include',
         body: JSON.stringify({ username: trimmedUsername, password }),
       });
       
@@ -72,9 +73,8 @@ export default function LoginPopup({ isOpen, onClose, onLogin }) {
           showLoginSuccess();
         }
 
-        // Save token and user
+        // Save user (token is in HTTP-only cookie)
         if (data.user) safeLocalStorage.setItem("user", data.user);
-        if (data.token) safeLocalStorage.setItem("token", data.token);
 
         onLogin(data.user);
         setUsername("");

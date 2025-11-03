@@ -4,6 +4,9 @@ import helmet from 'helmet';
 import http from 'http';
 import dotenv from 'dotenv';
 import loginRouter from './api/login.js';
+import payhereRouter from './api/payhere/notify.js';
+import cookieParser from 'cookie-parser';
+import sessionRouter from './api/session.js';
 
 // Load environment variables
 dotenv.config({ path: '.env' });
@@ -19,9 +22,12 @@ app.use(cors({
 }));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // Routes
 app.use('/login', loginRouter);
+app.use('/api/payhere', payhereRouter);
+app.use('/session', sessionRouter);
 
 // Health check endpoint
 app.get('/health', (req, res) => {

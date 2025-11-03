@@ -29,6 +29,20 @@ export default function SideNav({
     }
   }, [sidenavOpen]);
 
+  // Check session on mount
+  useEffect(() => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+    fetch(`${apiUrl}/session`, { credentials: 'include' })
+      .then((r) => r.json())
+      .then((data) => {
+        if (data?.authenticated) {
+          setIsLoggedIn(true);
+          setUser(data.user);
+        }
+      })
+      .catch(() => {});
+  }, [setIsLoggedIn]);
+
   const handleSheetOpenChange = (nextOpen) => {
     if (!nextOpen && loginPopupOpen) return;
     setShowSidenav(nextOpen);

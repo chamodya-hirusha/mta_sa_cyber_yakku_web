@@ -56,10 +56,20 @@ router.post('/', async (req, res) => {
       { expiresIn: '1h' }
     );
 
+    // Set HTTP-only session cookie
+    const isProd = process.env.NODE_ENV === 'production';
+    res.cookie('session', token, {
+      httpOnly: true,
+      secure: isProd,
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 60 * 60 * 1000, // 1 hour
+    });
+
     return res.status(200).json({
       success: true,
       user: safeUser,
-      token,
+      token, // optional, cookie is the source of truth
       message: 'Login successful',
     });
   } catch (err) {

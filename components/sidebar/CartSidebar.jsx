@@ -1,7 +1,19 @@
+"use client";
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import { ShoppingCart, X } from 'lucide-react';
 
 export default function CartSidebar({ cart, showCart, onClose, onRemove, total }) {
+  const router = useRouter();
+
+  const handleCheckout = () => {
+    // Save cart to localStorage before navigating
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+    onClose();
+    router.push('/checkout');
+  };
   if (!showCart) return null;
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 lg:static lg:bg-transparent lg:backdrop-blur-none">
@@ -60,7 +72,10 @@ export default function CartSidebar({ cart, showCart, onClose, onRemove, total }
                 ${total}
               </span>
             </div>
-            <button className="w-full py-2.5 sm:py-3 bg-gradient-to-r from-purple-500 via-red-500 to-pink-500 hover:from-purple-600 hover:via-red-600 hover:to-pink-600 text-white font-bold rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg shadow-red-500/30 text-sm sm:text-base">
+            <button 
+              onClick={handleCheckout}
+              className="w-full py-2.5 sm:py-3 bg-gradient-to-r from-purple-500 via-red-500 to-pink-500 hover:from-purple-600 hover:via-red-600 hover:to-pink-600 text-white font-bold rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg shadow-red-500/30 text-sm sm:text-base"
+            >
               Proceed to Checkout
             </button>
           </div>

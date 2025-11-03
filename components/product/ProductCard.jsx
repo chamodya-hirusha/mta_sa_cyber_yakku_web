@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { ShoppingCart } from 'lucide-react';
 import ProductImage from './card/ProductImage';
 import ProductRating from './card/ProductRating';
@@ -9,23 +10,31 @@ export default function ProductCard({ product = { name: 'Premium Headphones', im
     <div className="w-full group bg-gradient-to-br from-slate-900/50 to-purple-900/20 border border-purple-500/20 hover:border-red-400/50 rounded-lg sm:rounded-xl p-4 sm:p-5 md:p-6 transition-all duration-300 hover:shadow-xl hover:shadow-red-500/10 cursor-pointer relative overflow-hidden touch-manipulation [-webkit-tap-highlight-color:transparent]">
       {/* Discount Badge */}
       {product.discount > 0 && (
-        <div className="absolute top-2 right-2 sm:top-3 sm:right-3 bg-gradient-to-r from-red-500 to-pink-500 px-2 py-1 sm:px-3 rounded-full text-xs font-bold text-white shadow-lg">
+        <div className="absolute top-2 right-2 sm:top-3 sm:right-3 bg-gradient-to-r from-red-500 to-pink-500 px-2 py-1 sm:px-3 rounded-full text-xs font-bold text-white shadow-lg z-30">
           -{product.discount}%
         </div>
       )}
 
-      <ProductImage product={product} />
+      {/* Clickable link for main content */}
+      <Link 
+        href={`/products/${product.id}`}
+        className="block mb-4"
+        aria-label={`View ${product.name}`}
+      >
+        <ProductImage product={product} />
+        
+        {/* Product Name */}
+        <h3 className="font-bold text-white mb-3 text-sm sm:text-base md:text-lg line-clamp-2">{product.name}</h3>
 
-      {/* Product Name */}
-      <h3 className="font-bold text-white mb-3 text-sm sm:text-base md:text-lg line-clamp-2">{product.name}</h3>
+        <ProductRating product={product} />
+      </Link>
 
-      <ProductRating product={product} />
-
-      {/* Price and Add to Cart */}
+      {/* Price and Add to Cart - outside the link */}
       <div className="flex items-center justify-between gap-3">
         <ProductPrice product={product} />
         <button
           onClick={(e) => {
+            e.preventDefault();
             e.stopPropagation();
             addToCart?.(product);
           }}

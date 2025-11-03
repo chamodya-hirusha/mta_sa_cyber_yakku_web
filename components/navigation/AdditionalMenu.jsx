@@ -5,14 +5,18 @@ import { safeLocalStorage } from '@/lib/utils';
 
 export default function AdditionalMenu({ isLoggedIn, setIsLoggedIn, setLoginPopupOpen, setUser }) {
   // Handles frontend + backend logout logic
-  const handleLogout = () => {
-    // Use safe localStorage operations
+  const handleLogout = async () => {
+    try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+      await fetch(`${apiUrl}/session/logout`, {
+        method: 'POST',
+        credentials: 'include',
+      });
+    } catch {}
+    // Clear client-side state as well
     safeLocalStorage.removeItem("user");
     setIsLoggedIn(false);
-    if (setUser) {
-      setUser(null);
-    }
-    // Optionally: fetch('/api/logout', { method: "POST" });
+    if (setUser) setUser(null);
   };
 
   return (
